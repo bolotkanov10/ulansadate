@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy U Day!</title>
+    <link rel="stylesheet" href="./styles.css">
+    <!-- Favicon (иконка на вкладке) -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="card-container">
+        <div class="card old" id="currentCard"> 
+            <h1 class="header_text"><br> and my wasted heart<br> 
+                will always choose u</h1>
+            <h1 class="under_text">Happy Ulansa Day!</h1>
+        </div>
+        <div class="card new" id="nextCard">
+            <h1 class="header_text"><br> Даже когда<br>  
+                я стану депрессивным дедулей<br> 
+                а ты прекрасной бабулей</h1>
+            <h1 class="under_text">Happy Ulansa Day!</h1>
+        </div>
+    </div>
+
+    <script>
+        function nextPage() {
+            let currentCard = document.getElementById("currentCard");
+            let nextCard = document.getElementById("nextCard");
+
+            currentCard.classList.add("exit");
+            nextCard.classList.add("enter");
+
+            setTimeout(() => {
+                window.location.href = "page12.html"; // Меняем страницу после анимации
+            }, 600);
+        }
+
+        document.getElementById("currentCard").addEventListener("click", nextPage);
+    </script>
+</body>
+</html>
