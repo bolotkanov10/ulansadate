@@ -5,8 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy U Day!</title>
     <link rel="stylesheet" href="./styles.css">
-    <!-- Favicon (иконка на вкладке) -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            overflow: hidden; /* Отключаем прокрутку страницы */
+        }
+
+        .card {
+            transition: transform 0.6s ease-in, opacity 0.6s ease-in;
+            position: absolute;
+        }
+
+        .card.hidden {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Начальная позиция второй карточки, чуть ниже первой, уменьшенная и с случайным вращением */
+        .card.new {
+            transform: translateY(50px) scale(0.8) rotate( /* случайный угол */ );
+        }
+    </style>
 </head>
 <body>
     <div class="card-container">
@@ -23,19 +47,101 @@
     </div>
 
     <script>
-        function nextPage() {
-            let currentCard = document.getElementById("currentCard");
-            let nextCard = document.getElementById("nextCard");
-
-            currentCard.classList.add("exit");
-            nextCard.classList.add("enter");
-
-            setTimeout(() => {
-                window.location.href = "page9.html"; // Меняем страницу после анимации
-            }, 600);
+        // Функция для генерации случайного угла
+        function getRandomRotation() {
+            return (Math.random() * 20 - 10); // Возвращает случайное значение от -10 до +10 градусов
         }
 
-        document.getElementById("currentCard").addEventListener("click", nextPage);
+        let isDragging = false;
+        let startX, startY, currentX, currentY;
+        const currentCard = document.getElementById("currentCard");
+        const nextCard = document.getElementById("nextCard");
+
+        // Устанавливаем случайный угол для второй карточки
+        nextCard.style.transform = `translateY(50px) scale(0.8) rotate(${getRandomRotation()}deg)`;
+
+        function handleStart(event) {
+            isDragging = true;
+            startX = event.touches ? event.touches[0].clientX : event.clientX;
+            startY = event.touches ? event.touches[0].clientY : event.clientY;
+            currentX = startX;
+            currentY = startY;
+
+            currentCard.style.transition = "none"; // Убираем резкие анимации
+        }
+
+        function handleMove(event) {
+            if (!isDragging) return;
+
+            // Предотвращаем прокрутку страницы при свайпе
+            event.preventDefault();
+
+            let moveX = event.touches ? event.touches[0].clientX : event.clientX;
+            let moveY = event.touches ? event.touches[0].clientY : event.clientY;
+
+            let diffX = moveX - startX;
+            let diffY = moveY - startY;
+
+            // Ограничиваем движение карточки, чтобы оно было пропорционально движению пальца
+            let maxMovement = 200; // максимальное перемещение
+            let limitedDiffX = Math.min(Math.max(diffX, -maxMovement), maxMovement);
+            let limitedDiffY = Math.min(Math.max(diffY, -maxMovement), maxMovement);
+
+            // Рассчитываем угол поворота в зависимости от движения
+            let rotation = (limitedDiffX / window.innerWidth) * 20; // Чем дальше тянем – тем больше угол (до 10 градусов)
+
+            // Применяем трансформацию только к первой карточке
+            currentCard.style.transform = `translate(${limitedDiffX}px, ${limitedDiffY}px) rotate(${rotation}deg)`;
+        }
+
+        function handleEnd(event) {
+            if (!isDragging) return;
+            isDragging = false;
+
+            let endX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX;
+            let endY = event.changedTouches ? event.changedTouches[0].clientY : event.clientY;
+
+            let diffX = endX - startX;
+            let diffY = endY - startY;
+
+            let translateX = 0, translateY = 0;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                translateX = diffX > 50 ? "100%" : "-100%";
+            } else {
+                translateY = diffY > 50 ? "100%" : "-100%";
+            }
+
+            currentCard.style.transition = "transform 0.5s ease-in, opacity 0.5s ease-in"; // Применяем ease-in для плавного ускорения
+            currentCard.style.transform = `translate(${translateX}, ${translateY}) scale(0.6) rotate(${diffX > 0 ? 15 : -15}deg)`;
+            currentCard.style.opacity = "0";
+
+            // Ждём исчезновения первой карточки и показываем вторую
+            setTimeout(() => {
+                currentCard.classList.add("hidden");
+                nextCard.classList.remove("hidden");
+                nextCard.classList.add("visible");
+
+                // Вторая карточка начинает свой путь с низкой позиции и меньшего размера
+                nextCard.style.transition = "transform 0.6s ease-in"; // Используем ease-in для плавного начала и ускорения
+                nextCard.style.transform = "translateY(0) scale(1)"; // Плавно поднимется и станет нормального размера
+
+                // Через 1.5 секунды переходим на следующую страницу
+                setTimeout(() => {
+                    window.location.href = "page9.html";
+                }, 1500);
+            }, 300);
+        }
+
+        // Добавляем события для мыши
+        currentCard.addEventListener("mousedown", handleStart);
+        document.addEventListener("mousemove", handleMove);
+        document.addEventListener("mouseup", handleEnd);
+
+        // Добавляем события для тач-устройств
+        currentCard.addEventListener("touchstart", handleStart);
+        document.addEventListener("touchmove", handleMove);
+        document.addEventListener("touchend", handleEnd);
     </script>
 </body>
 </html>
