@@ -2,83 +2,81 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 90vh; /* Используем 100vh для того, чтобы высота была 100% от окна */
+    height: 90vh;
     background-color: #ececec;
     font-family: Arial, sans-serif;
-    margin: 0; /* Убираем отступы по умолчанию */
+    margin: 0;
 }
 
 .card-container {
     position: relative;
-    width: 400px; /* Увеличиваем ширину контейнера */
-    height: 250px; /* Увеличиваем высоту контейнера */
-    display: flex; /* Для выравнивания карточек по центру */
-    justify-content: center; /* Центрируем карточки по горизонтали */
-    align-items: center; /* Центрируем карточки по вертикали */
+    width: 40%; /* Уменьшили ширину контейнера */
+    max-width: 300px; /* Максимальная ширина контейнера */
+    height: 120px; /* Уменьшили высоту контейнера */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #244b86; /* Цвет фона */
+    background: #244b86;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 60px; /* Скругленные углы */
-    padding: 30px; /* Padding */
+    border-radius: 30px; /* Уменьшили радиус скругления */
+    padding: 12px; /* Уменьшили padding */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white; /* Текст будет белым для контраста */
-    font-family: Arial, sans-serif; /* Шрифт */
+    color: white;
+    font-family: Arial, sans-serif;
     transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-    text-transform: uppercase; /* Все тексты внутри карточки будут отображаться капсом */
+    text-transform: uppercase;
 }
 
 .header_text {
-    font-size: 20px;
+    font-size: 10px; /* Уменьшили размер шрифта */
     color: white;
     text-align: center;
-    margin-top: 20px;
-    margin-bottom: 55px;
+    margin-top: 5px;
+    margin-bottom: 25px; /* Уменьшили отступ снизу */
 }
 
 .under_text {
-    font-size: 12px; /* В два раза меньше, чем основной текст */
+    font-size: 5px; /* В два раза меньше, чем основной текст */
     color: white;
     position: absolute;
-    bottom: 5px; /* Отступ от нижнего края карточки */
-    width: 100%; /* Чтобы текст был по центру */
-    text-align: center; /* Выравнивание по центру */
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
 }
 
 .last_text {
-    font-size: 10px; /* В два раза меньше, чем основной текст */
+    font-size: 4px; /* Еще меньше текст */
     color: white;
     position: absolute;
-    bottom: 10px; /* Отступ от нижнего края карточки */
-    width: 100%; /* Чтобы текст был по центру */
-    text-align: center; /* Выравнивание по центру */
+    bottom: 3px;
+    width: 100%;
+    text-align: center;
 }
 
-/* Первая карточка */
 .card.old {
     transform: translateY(0) scale(1);
     z-index: 2;
 }
 
-/* Вторая карточка с анимацией появления */
 .card.new {
-    transform: translateY(50px) scale(0.9);
+    transform: translateY(30px) scale(0.7);
     z-index: 1;
     opacity: 0;
-    animation: fadeIn 1s forwards; /* Добавлена анимация появления */
-    animation-delay: 1.5s; /* Задержка перед появлением */
+    animation: fadeIn 1s forwards;
+    animation-delay: 1.5s;
 }
 
-/* Элементы с анимацией ухода */
 .card.exit {
-    transform: translateX(-100%) scale(0.8);
+    transform: translateX(-100%) scale(0.6);
     opacity: 0;
 }
 
@@ -87,7 +85,6 @@ body {
     opacity: 1;
 }
 
-/* Анимация плавного появления второй карточки */
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -97,57 +94,53 @@ body {
     }
 }
 
-/* Кнопки внутри карточки */
 .buttons {
     position: absolute;
-    bottom: 20px; /* Располагаем кнопки внизу */
-    width: 100%; /* Заполняем всю ширину карточки */
+    bottom: 10px; /* Располагаем кнопки ближе к низу */
+    width: 100%;
     display: flex;
-    justify-content: center; /* Центрируем кнопки по горизонтали */
-    gap: 20px; /* Уменьшаем расстояние между кнопками */
-    z-index: 3; /* Кнопки поверх карточки */
-    opacity: 0; /* Скрываем кнопки по умолчанию */
-    animation: buttonsFadeIn 1s forwards; /* Анимация появления кнопок */
-    animation-delay: 2s; /* Задержка для начала анимации */
+    justify-content: center;
+    gap: 10px; /* Уменьшаем расстояние между кнопками */
+    z-index: 3;
+    opacity: 0;
+    animation: buttonsFadeIn 1s forwards;
+    animation-delay: 2s;
 }
 
 .btn {
     background-color: #446ead;
     color: white;
-    padding: 15px 28px; /* Немного уменьшаем горизонтальные отступы */
+    padding: 9px 16px; /* Уменьшили padding */
     text-align: center;
     display: inline-block;
-    font-size: 16px;
+    font-size: 10px; /* Уменьшили шрифт */
     cursor: pointer;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px; /* Уменьшили радиус кнопок */
     transition: background-color 0.3s ease;
-    width: 130px; /* Уменьшаем ширину кнопок */
+    width: 60px; /* Уменьшили ширину кнопок */
 }
 
 #noButton, #yesButton {
-    padding: 15px 32px;
-    font-size: 16px;
-    border-radius: 12px;
-    background-color: #446ead; /* Цвет кнопки */
+    padding: 9px 19px;
+    font-size: 10px;
+    border-radius: 8px;
+    background-color: #446ead;
     color: white;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 10px
+    margin-bottom: 8px;
 }
 
 #noButton {
-    background-color: #ff4d4d; /* Красный цвет для кнопки NO */
-   
+    background-color: #ff4d4d;
 }
 
 #yesButton {
-    background-color: #4CAF50; /* Зеленый цвет для кнопки YES */
-    margin-left: 0px;
+    background-color: #4CAF50;
 }
 
-/* Анимация появления кнопок */
 @keyframes buttonsFadeIn {
     0% {
         opacity: 0;
@@ -169,16 +162,12 @@ body {
     }
 
     .header_text {
-        font-size: 20px;
-    }
-
-    img {
-        height: 60vh;
+        font-size: 8px;
     }
 
     .btn {
-        padding: 10px 18px;
-        font-size: 12px;
+        padding: 7px 12px;
+        font-size: 8px;
     }
 }
 
@@ -188,15 +177,11 @@ body {
     }
 
     .header_text {
-        font-size: 28px;
-    }
-
-    img {
-        height: 60vh;
+        font-size: 12px;
     }
 
     .btn {
-        padding: 15px 25px;
-        font-size: 14px;
+        padding: 9px 15px;
+        font-size: 10px;
     }
 }
