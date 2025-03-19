@@ -67,6 +67,9 @@
         function handleMove(event) {
             if (!isDragging) return;
 
+            // Предотвращаем прокрутку страницы при свайпе
+            event.preventDefault();
+
             let moveX = event.touches ? event.touches[0].clientX : event.clientX;
             let moveY = event.touches ? event.touches[0].clientY : event.clientY;
 
