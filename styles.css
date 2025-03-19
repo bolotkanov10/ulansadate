@@ -10,8 +10,8 @@ body {
 
 .card-container {
     position: relative;
-    width: 500px; /* Увеличиваем ширину контейнера */
-    height: 300px; /* Увеличиваем высоту контейнера */
+    width: 400px; /* Увеличиваем ширину контейнера */
+    height: 250px; /* Увеличиваем высоту контейнера */
     display: flex; /* Для выравнивания карточек по центру */
     justify-content: center; /* Центрируем карточки по горизонтали */
     align-items: center; /* Центрируем карточки по вертикали */
@@ -19,8 +19,8 @@ body {
 
 .card {
     position: absolute;
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     background: #244b86; /* Цвет фона */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 60px; /* Скругленные углы */
@@ -36,10 +36,10 @@ body {
 }
 
 .header_text {
-    font-size: 25px;
+    font-size: 20px;
     color: white;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
     margin-bottom: 55px;
 }
 
@@ -56,7 +56,7 @@ body {
     font-size: 10px; /* В два раза меньше, чем основной текст */
     color: white;
     position: absolute;
-    bottom: 130px; /* Отступ от нижнего края карточки */
+    bottom: 10px; /* Отступ от нижнего края карточки */
     width: 100%; /* Чтобы текст был по центру */
     text-align: center; /* Выравнивание по центру */
 }
@@ -134,7 +134,7 @@ body {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px
+    margin-bottom: 10px
 }
 
 #noButton {
