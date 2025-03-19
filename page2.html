@@ -5,35 +5,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy U Day!</title>
     <link rel="stylesheet" href="./styles.css">
-    <!-- Favicon (иконка на вкладке) -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ececec;
+        }
+
+        .card-container {
+            position: relative;
+            width: 310px;
+            height: 190px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px; /* Добавляем перспективу для эффекта сгибания */
+        }
+
+        .card {
+            transition: transform 0.6s ease-in, opacity 0.6s ease-in;
+            position: absolute;
+            background-color: #244b86;
+            width: 100%;
+            height: 100%;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .header_text {
+            font-size: 20px;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+
+        .under_text {
+            font-size: 5px;
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Начальная позиция второй карточки */
+        .card.new {
+            transform: translateY(50px) scale(0.8) rotate(5deg);
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+
+        .visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
 </head>
 <body>
     <div class="card-container">
-        <div class="card old" id="currentCard"> 
+        <div class="card old" id="currentCard">
             <h1 class="header_text"><br> Stay as cheerful<br> bright and joyful as u r</h1>
             <h1 class="under_text">Happy Ulansa Day!</h1>
         </div>
-        <div class="card new" id="nextCard">
+        <div class="card new hidden" id="nextCard">
             <h1 class="header_text"><br> u’ve been makin this world<br> brighter for 9 496 days<br> in a row</h1>
             <h1 class="under_text">Happy Ulansa Day!</h1>
         </div>
     </div>
 
     <script>
-        function nextPage() {
-            let currentCard = document.getElementById("currentCard");
-            let nextCard = document.getElementById("nextCard");
+        let isDragging = false;
+        let startX, startY, currentX, currentY;
+        const currentCard = document.getElementById("currentCard");
+        const nextCard = document.getElementById("nextCard");
 
-            currentCard.classList.add("exit");
-            nextCard.classList.add("enter");
-
-            setTimeout(() => {
-                window.location.href = "page3.html"; // Меняем страницу после анимации
-            }, 600);
+        // Функция для генерации случайного угла для второй карточки
+        function getRandomRotation() {
+            return (Math.random() * 20 - 10); // Случайный угол от -10 до +10
         }
 
-        document.getElementById("currentCard").addEventListener("click", nextPage);
+        // Инициализируем вторую карточку с маленьким размером и случайным углом
+        nextCard.style.transform = `translateY(50px) scale(0.8) rotate(${getRandomRotation()}deg)`;
+
+        // Функция, обрабатывающая начало события движения мыши или касания
+        function handleStart(event) {
+            isDragging = true;
+            startX = event.touches ? event.touches[0].clientX : event.clientX;
+            startY = event.touches ? event.touches[0].clientY : event.clientY;
+            currentX = startX;
+            currentY = startY;
+
+            currentCard.style.transition = "none"; // Убираем анимацию при начале движения
+        }
+
+        // Функция для отслеживания движения мыши или касания
+        function handleMove(event) {
+            if (!isDragging) return;
+
+            let moveX = event.touches ? event.touches[0].clientX : event.clientX;
+            let moveY = event.touches ? event.touches[0].clientY : event.clientY;
+
+            let diffX = moveX - startX;
+            let diffY = moveY - startY;
+
+            // Усиливаем эффект сворачивания карточки
+            let rotateX = (diffY / window.innerHeight) * 30; // Увеличиваем эффект на оси X
+            let rotateY = -(diffX / window.innerWidth) * 30; // Увеличиваем эффект на оси Y
+
+            // Применяем деформацию на карточке
+            currentCard.style.transform = `translate(${diffX}px, ${diffY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
+
+        // Функция, обрабатывающая завершение события движения
+        function handleEnd(event) {
+            if (!isDragging) return;
+            isDragging = false;
+
+            let endX = event.changedTouches ? event.changedTouches[0].clientX : event.clientX;
+            let endY = event.changedTouches ? event.changedTouches[0].clientY : event.clientY;
+
+            let diffX = endX - startX;
+            let diffY = endY - startY;
+
+            let translateX = 0, translateY = 0;
+
+            // Определяем, куда свайпнуть карточку
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                translateX = diffX > 50 ? "100%" : "-100%";
+            } else {
+                translateY = diffY > 50 ? "100%" : "-100%";
+            }
+
+            currentCard.style.transition = "transform 0.5s ease-in, opacity 0.5s ease-in"; // Плавная анимация завершения
+            currentCard.style.transform = `translate(${translateX}, ${translateY}) scale(0.6) rotateX(15deg) rotateY(15deg)`;
+            currentCard.style.opacity = "0";
+
+            // Ждем исчезновения первой карточки и показываем вторую
+            setTimeout(() => {
+                currentCard.classList.add("hidden");
+                nextCard.classList.remove("hidden");
+                nextCard.classList.add("visible");
+
+                // Вторая карточка начинает анимацию с меньшим размером
+                nextCard.style.transition = "transform 0.6s ease-in"; 
+                nextCard.style.transform = "translateY(0) scale(1)"; 
+
+                // Переходим на следующую страницу через 1.5 секунды
+                setTimeout(() => {
+                    window.location.href = "page3.html";
+                }, 1500);
+            }, 300);
+        }
+
+        // Добавляем события для мыши
+        currentCard.addEventListener("mousedown", handleStart);
+        document.addEventListener("mousemove", handleMove);
+        document.addEventListener("mouseup", handleEnd);
+
+        // Добавляем события для тач-устройств
+        currentCard.addEventListener("touchstart", handleStart);
+        document.addEventListener("touchmove", handleMove);
+        document.addEventListener("touchend", handleEnd);
     </script>
 </body>
 </html>
