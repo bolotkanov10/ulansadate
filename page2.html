@@ -8,7 +8,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         .card {
-            transition: transform 0.6s ease-in, opacity 0.6s ease-in; /* Используем ease-in для плавного начала и ускорения */
+            transition: transform 0.6s ease-in, opacity 0.6s ease-in;
             position: absolute;
         }
 
@@ -76,10 +76,16 @@
             let diffX = moveX - startX;
             let diffY = moveY - startY;
 
-            // Рассчитываем угол поворота в зависимости от движения
-            let rotation = (diffX / window.innerWidth) * 20; // Чем дальше тянем – тем больше угол (до 10 градусов)
+            // Ограничиваем движение карточки, чтобы оно было пропорционально движению пальца
+            let maxMovement = 200; // максимальное перемещение
+            let limitedDiffX = Math.min(Math.max(diffX, -maxMovement), maxMovement);
+            let limitedDiffY = Math.min(Math.max(diffY, -maxMovement), maxMovement);
 
-            currentCard.style.transform = `translate(${diffX}px, ${diffY}px) rotate(${rotation}deg)`;
+            // Рассчитываем угол поворота в зависимости от движения
+            let rotation = (limitedDiffX / window.innerWidth) * 20; // Чем дальше тянем – тем больше угол (до 10 градусов)
+
+            // Применяем трансформацию только к первой карточке
+            currentCard.style.transform = `translate(${limitedDiffX}px, ${limitedDiffY}px) rotate(${rotation}deg)`;
         }
 
         function handleEnd(event) {
