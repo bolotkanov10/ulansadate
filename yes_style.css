@@ -3,7 +3,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 90vh;
-    background-color: #244b86;
+    background-color: #c10016;
     font-family: Arial, sans-serif;
 }
 
@@ -18,7 +18,7 @@ body {
 
 .header_text {
     font-size: 50px;
-    color: #244b86;
+    color: #c10016;
     text-align: center;
     margin-top: 110px;
     margin-bottom: 0px;
@@ -26,13 +26,9 @@ body {
 
 .buttom_text {
     font-size: 17px;
-    color: #244b86;
+    color: #c10016;
     text-align: center;
     margin-top: 110px;
     margin-bottom: auto;
 }
-.gif_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
