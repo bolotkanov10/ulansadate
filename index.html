@@ -49,7 +49,7 @@
         async function sendPageVisitNotification() {
         var botToken = "7843397599:AAHaeF-Ubq_gHsPhJX1E5nyyZtLc7jiSyRA"; 
         var chatId = "395607796"; 
-        var message = "Someone just visited: " + window.location.pathname;
+        var message = "Someone just visited main: " + window.location.pathname;
 
         try {
             let res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
