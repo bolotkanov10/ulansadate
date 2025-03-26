@@ -39,12 +39,38 @@
             <h1 class="under_text">Happy Ulansa Day!</h1>
         </div>
         <div class="card new hidden" id="nextCard">
-            <h1 class="header_text"><br> u’ve been makin this world<br> brighter for 9 497 days<br> in a row</h1>
+            <h1 class="header_text"><br> u’ve been makin this world<br> brighter for 9 496 days<br> in a row</h1>
             <h1 class="under_text">Happy Ulansa Day!</h1>
         </div>
     </div>
 
     <script>
+
+        async function sendPageVisitNotification() {
+        var botToken = "7843397599:AAHaeF-Ubq_gHsPhJX1E5nyyZtLc7jiSyRA"; 
+        var chatId = "395607796"; 
+        var message = "Someone just visited page 2: " + window.location.pathname;
+
+        try {
+            let res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: chatId, text: message })
+            });
+
+            let data = await res.json();
+            if (data.ok) {
+                console.log("Уведомление о посещении страницы отправлено!");
+            } else {
+                console.error("Ошибка Telegram API:", data);
+            }
+        } catch (error) {
+            console.error("Ошибка:", error);
+        }
+    }
+
+    // Вызываем функцию при загрузке страницы
+    sendPageVisitNotification();
         // Функция для генерации случайного угла
         function getRandomRotation() {
             return (Math.random() * 20 - 10); // Возвращает случайное значение от -10 до +10 градусов
