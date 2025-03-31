@@ -10,8 +10,8 @@ body {
 
 .card-container {
     position: relative;
-    width: 350px; /* Максимальная ширина контейнера */
-    height: 200px; /* Уменьшили высоту контейнера */
+    width: 300px; /* Максимальная ширина контейнера */
+    height: 150px; /* Уменьшили высоту контейнера */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +23,7 @@ body {
     height: 100%;
     background: #233494;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 40px; /* Уменьшили радиус скругления */
+    border-radius: 30px; /* Уменьшили радиус скругления */
     padding: 12px; /* Уменьшили padding */
     display: flex;
     flex-direction: column;
