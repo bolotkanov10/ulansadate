@@ -2,7 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Меняем height на min-height, чтобы работало на всех экранах */
     background-color: white;
     font-family: Arial, sans-serif;
     color: black;
@@ -14,19 +14,34 @@ body {
 
 .text-container {
     width: 100%;
-    max-width: 600px; /* Ограничиваем ширину для удобочитаемости */
-    margin-top: 10vh; /* Добавляем отступ сверху */
+    max-width: 600px;
+    padding: 20px;
 }
 
 .header_text {
-    font-size: 16px; /* Уменьшенный размер шрифта */
-    font-weight: normal; /* Сделали текст тонким */
+    font-size: 14px; /* Уменьшенный размер шрифта */
+    font-weight: normal;
     margin-bottom: 5px;
     text-transform: none;
 }
 
 .under_text, .last_text {
-    font-size: 12px; /* Тоже уменьшили */
-    font-weight: normal; /* Сделали текст тонким */
+    font-size: 12px;
+    font-weight: normal;
     margin-top: 5px;
+}
+
+/* Для маленьких экранов */
+@media only screen and (max-width: 768px) {
+    .text-container {
+        padding-top: 20vh; /* Добавляем отступ сверху только для телефонов */
+    }
+    
+    .header_text {
+        font-size: 12px; /* Еще меньше для мобильных */
+    }
+    
+    .under_text, .last_text {
+        font-size: 10px;
+    }
 }
