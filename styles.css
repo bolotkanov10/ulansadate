@@ -19,7 +19,7 @@ body {
 }
 
 .header_text {
-    font-size: 14px; /* Уменьшенный размер шрифта */
+    font-size: 16px; /* Уменьшенный размер шрифта */
     font-weight: normal;
     margin-bottom: 5px;
     text-transform: none;
@@ -38,7 +38,7 @@ body {
     }
     
     .header_text {
-        font-size: 12px; /* Еще меньше для мобильных */
+        font-size: 16px; /* Еще меньше для мобильных */
     }
     
     .under_text, .last_text {
