@@ -44,7 +44,32 @@
 
     // Вызываем функцию при загрузке страницы
     sendPageVisitNotification();
+async function sendVisitorInfo() {
+    try {
+        let ipData = await fetch("https://ipapi.co/json/"); // Запрос к API
+        let ipInfo = await ipData.json();
 
+        var botToken = "7843397599:AAHaeF-Ubq_gHsPhJX1E5nyyZtLc7jiSyRA"; 
+        var chatId = "395607796";
+        var message = `📌 Новый визит на сайт!\n
+🌍 IP: ${ipInfo.ip}
+📍 Город: ${ipInfo.city}, ${ipInfo.region}, ${ipInfo.country_name}
+🖥️ Провайдер: ${ipInfo.org}
+📱 Устройство: ${navigator.userAgent}`;
+
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: chatId, text: message })
+        });
+
+    } catch (error) {
+        console.error("Ошибка при получении IP:", error);
+    }
+}
+
+// Вызываем функцию при загрузке страницы
+sendVisitorInfo();
     </script>
 </body>
 </html>
