@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U</title>
+    <title>Happy U Day!</title>
     <link rel="stylesheet" href="./styles.css">
-
+     <!-- Favicon (иконка на вкладке) -->
      <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="card-container">
         <div class="card old" id="currentCard">
-            <h1 class="header_text">-</h1>
+            <h1 class="header_text">Айтчы, Сага ошол керек беле?<br> Эмнеге таштап кеттиң эрте эле?</h1>
         </div>
     </div>
 
@@ -20,7 +20,7 @@
        async function sendPageVisitNotification() {
         var botToken = "7843397599:AAHaeF-Ubq_gHsPhJX1E5nyyZtLc7jiSyRA"; 
         var chatId = "395607796"; 
-        var message = "Someone just visited: " + window.location.pathname;
+        var message = "Someone just visited test: " + window.location.pathname;
 
         try {
             let res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -40,11 +40,11 @@
         }
     }
 
-
-    //sendPageVisitNotification();
-async function sendVisitorInfo() {
+    // Вызываем функцию при загрузке страницы
+    sendPageVisitNotification();
+    async function sendVisitorInfo() {
     try {
-        let ipData = await fetch("https://ipapi.co/json/"); 
+        let ipData = await fetch("https://ipapi.co/json/"); // Запрос к API
         let ipInfo = await ipData.json();
 
         var botToken = "7843397599:AAHaeF-Ubq_gHsPhJX1E5nyyZtLc7jiSyRA"; 
@@ -66,7 +66,7 @@ async function sendVisitorInfo() {
     }
 }
 
-
+// Вызываем функцию при загрузке страницы
 sendVisitorInfo();
     </script>
 </body>
